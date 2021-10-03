@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Formik } from "formik";
 import axios from 'axios';
 
 
-class SubmitForm extends Component {
 
-    state ={
-        values: {
-            name: '',
-            feedback: ''
-        }
-    }
 
-    render() {
-
-        let form = (
+const Form = () =>{
+    return(
+        <div>
             <Formik
                 initialValues={
                     {
@@ -26,10 +19,11 @@ class SubmitForm extends Component {
                 onSubmit={
                     (values) => {
                         const feedback = { values };
-                        axios.post('https://gallery-app-50da8-default-rtdb.firebaseio.com/', feedback)
+                        axios.post('https://gallery-app-f6a2d-default-rtdb.firebaseio.com/feedback.json', feedback)
                             .then(response => response.data)
                             .then(err => console.log(err));
 
+                            console.log(values);
                     }
                 }
 
@@ -44,22 +38,35 @@ class SubmitForm extends Component {
                     <br />
                     <br />
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} >
+                        
                         <input
                             name="name"
                             placeholder="Enter Your Name"
                             className="form-control"
                             value={values.name}
                             onChange={handleChange}
+                            style={{
+                                height:'30%',
+                                width:"50%",
+                                margin:"10px",
+                                padding:"10px"
+                            }}
                         />
 
                         <br />
                         <input
                             name="feedback"
-                            placeholder="Password"
+                            placeholder="Give your Feedback"
                             className="form-control"
                             value={values.feedback}
                             onChange={handleChange}
+                            style={{
+                                height:'20px',
+                                width:"50%",
+                                margin:"10px",
+                                padding:"30px"
+                            }}
                         />
 
                         <br />
@@ -69,21 +76,8 @@ class SubmitForm extends Component {
                 </div>)}
 
             </Formik>
-        )
-
-        return (
-            <div>
-                {form}
-                {/* <Modal isOpen={this.state.isModalOpen} onClick={this.goBack}>
-                        <ModalBody>
-                            <p>{this.state.modalMsg}</p>
-                        </ModalBody>
-    
-                    </Modal> */}
-            </div>
-        );
-    }
-
+        </div>
+    );
 }
 
-export default SubmitForm;
+export default Form;

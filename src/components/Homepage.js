@@ -3,10 +3,6 @@ import firstImg from "../pictures/1.jpg";
 import secondImg from "../pictures/2.jpg";
 import thirdImg from "../pictures/3.jpg";
 import fourthImg from "../pictures/4.jpg";
-import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
-} from 'reactstrap';
 
 import Cardpic from './card';
 

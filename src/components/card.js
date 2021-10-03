@@ -3,7 +3,8 @@ import {
     Card, CardImg, CardBody,
 } from 'reactstrap';
 
-import submitForm from "./submitForm";
+// import {SubmitForm} from './submitForm.js';
+import Form from './form';
 
 
 const Cardpic = (props) => {
@@ -16,7 +17,8 @@ const Cardpic = (props) => {
                     
                 }} />
                 <CardBody>
-                    
+                    <Form/>
+                    {/* <SubmitForm /> */}
                 </CardBody>
                 
             </Card>

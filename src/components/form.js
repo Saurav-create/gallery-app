@@ -16,8 +16,6 @@ class Form extends Component {
 
     state = {
         isLoading: false,
-        isModalOpen: false,
-        modalMsg: '',
     }
 
     goBack = () => {
@@ -28,94 +26,113 @@ class Form extends Component {
     render() {
 
         const form = (
-            <Formik
-                initialValues={
-                    {
-                        name: '',
-                        feedback: ''
+            <div>
+                <Formik
+                    initialValues={
+                        {
+                            name: '',
+                            feedback: ''
 
+                        }
                     }
-                }
-                onSubmit={
-                    (values) => {
-                        this.setState({
-                            ...this.state,
-                            isLoading: true,
-                        })
-                        const feedback = { values };
-                        axios.post('https://gallery-app-f6a2d-default-rtdb.firebaseio.com/feedback.json', feedback)
-                            .then(response => {
-                                if (response.status === 200) {
-                                    this.setState({
-                                        isLoading: false,
-                                        isModalOpen: true,
-                                        modalMsg: 'Feedback Submitted Successfully!',
-                                    });
-                                   console.log(this.state);
-                                }
-                                else {
-                                    this.setState({
-                                        isLoading: false,
-                                        isModalOpen: true,
-                                        modalMsg: 'Something Went Wrong! Try Again',
-                                    });
-                                }
+                    onSubmit={
+                        (values) => {
+                            this.setState({
+                                ...this.state,
+                                isLoading: true,
                             })
-                            .then(err => console.log(err));
+                            const feedback = { values };
+
+                            if(feedback.values.feedback!= "" && feedback.values.name!=""){
+                                axios.post('https://gallery-app-f6a2d-default-rtdb.firebaseio.com/feedback.json', feedback)
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        this.setState({
+                                            isLoading: false,
+                                        });
+                                        alert("Feedback Submitted Successfully");
+                                        console.log(feedback);
+                                    }
+                                    else {
+                                        this.setState({
+                                            isLoading: false,
+                                        });
+                                    }
+                                })
+                                .then(err => console.log(err));
+
+                            }
+                            else{
+                                alert("Please enter all the information");
+                                this.setState({
+                                    isLoading: false,
+                                });
+                            }
 
 
+                            
+
+                        }
                     }
-                }
 
-            >
+                >
 
-                {({ values, handleChange, handleSubmit }) => (<div style={{
-                    border: "1px grey solid",
-                    padding: "15px",
-                    borderRadius: "7px",
-                }}>
-
-                    <br />
-                    <br />
-
-                    <form onSubmit={handleSubmit} >
-
-                        <input
-                            name="name"
-                            placeholder="Enter Your Name"
-                            className="form-control"
-                            value={values.name}
-                            onChange={handleChange}
-                            style={{
-                                height: '30%',
-                                width: "50%",
-                                margin: "10px",
-                                padding: "10px"
-                            }}
-                        />
+                    {({ values, handleChange, handleSubmit }) => (<div style={{
+                        border: "1px grey solid",
+                        padding: "15px",
+                        borderRadius: "7px",
+                        width: "70%",
+                        alignItems: "center",
+                        marginLeft: "15%"
+                    }}>
 
                         <br />
-                        <input
-                            name="feedback"
-                            placeholder="Give your Feedback"
-                            className="form-control"
-                            value={values.feedback}
-                            onChange={handleChange}
-                            style={{
-                                height: '20px',
-                                width: "50%",
-                                margin: "10px",
-                                padding: "30px"
-                            }}
-                        />
-
                         <br />
 
-                        <Button type="submit" className="btn btn-success">Submit</Button>
-                    </form>
-                </div>)}
+                        <form onSubmit={handleSubmit} >
+                            <label>Name</label>
 
-            </Formik>
+                            <input
+                                name="name"
+                                placeholder="Enter Your Name"
+                                className="form-control"
+                                value={values.name}
+                                onChange={handleChange}
+                                style={{
+                                    height: '30%',
+                                    width: "50%",
+                                    margin: "10px",
+                                    padding: "10px"
+                                }}
+                            />
+
+                            <br />
+                            <label>Feedback</label>
+                            <input
+                                name="feedback"
+                                placeholder="Give your Feedback"
+                                className="form-control"
+                                value={values.feedback}
+                                onChange={handleChange}
+                                style={{
+                                    height: '20px',
+                                    width: "50%",
+                                    margin: "10px",
+                                    padding: "30px"
+                                }}
+                            />
+
+                            <br />
+
+                            <Button type="submit" className="btn btn-success">Submit</Button>
+                        </form>
+
+                    </div>)}
+
+                </Formik>
+                <br />
+                <hr />
+            </div>
         );
 
 
@@ -124,12 +141,6 @@ class Form extends Component {
         return (
             <div>
                 {this.state.isLoading ? <Spinner /> : form}
-                <Modal isOpen={this.state.isModalOpen} >
-                    <ModalBody>
-                        <p>{this.state.modalMsg}</p>
-                    </ModalBody>
-
-                </Modal>
             </div>
         );
     }

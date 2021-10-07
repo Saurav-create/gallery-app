@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import axios from 'axios';
 import { connect } from "react-redux";
-import { Button, Modal, ModalBody } from 'reactstrap';
+import { Button} from 'reactstrap';
 import Spinner from './Spinner/Spinner.js';
 
 

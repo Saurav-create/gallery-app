@@ -1,15 +1,22 @@
 import './App.css';
 import React from 'react';
-import Homepage from './components/Homepage';
-import { Provider } from 'react-redux';
+import Main from './components/Main';
+import { BrowserRouter } from 'react-router-dom';
+
+
 
 function App() {
   return (
-    
+  
+      <BrowserRouter>
       <div className="App">
-        <Homepage />
+       <Main />
       </div>
     
+      </BrowserRouter>
+    
+    
+      
 
   );
 }

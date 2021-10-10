@@ -124,7 +124,7 @@ class Form extends Component {
 
                             <br />
 
-                            <Button type="submit" className="btn btn-success">Submit</Button>
+                            <button type="submit" className="btn btn-success">Submit</button>
                         </form>
 
                     </div>)}

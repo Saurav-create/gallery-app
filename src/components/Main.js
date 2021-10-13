@@ -2,26 +2,52 @@ import React from "react";
 import Homepage from "./Homepage";
 import Header from "./Header/Header";
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Login from "./Login";
-import LoginNew from "./loginNew";
+import LoginNew from './loginNew';
+import { connect } from "react-redux";
 
 
 
-const Main = ()=>{
+const mapStateToProps = state => {
+    return {
+        token: state.token,
+    }
+}
 
-    return(
+const Main = (props) => {
+
+    let routes = null;
+    if (props.token === null) {
+        routes = (
+            <Switch>
+
+                <Route path="/login" exact component={LoginNew} />
+
+                <Redirect to="/login" />
+
+            </Switch>
+        )
+
+    }
+    else {
+        routes = (<Switch>
+
+            <Route path="/" component={Homepage} />
+            <Redirect to="/" />
+
+        </Switch>)
+    }
+
+    console.log(props.token)
+    return (
         <div>
             <Header />
-          {/* <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/homepage" component={Homepage} />         
-                <Redirect to="/" />
-            </Switch> */}
 
-        <LoginNew />
+            {routes}
+
+
         </div>
     );
 }
 
 
-export default Main;
+export default connect(mapStateToProps)(Main);

@@ -1,19 +1,36 @@
-import React from "react";
+import React, { Component } from "react";
 import './Header.css';
-import { Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import { Navbar, Nav, NavItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import { connect } from "react-redux";
+import { Logout } from "../redux/actionCreators";
 
 
 
 
-const Header = (props) => {
+
+
+const mapStateToProps = state => {
+    return {
+        token: state.token,
+    }
+}
+const mapDispatchToProps= dispatch =>{
+    return{
+        Logout: ()=> dispatch(Logout()),
+    }
+}
+
+
+const Header = props => {
+
+
 
     let links = null;
-    if (true) {
-        
+    if (props.token === null) {
+
         links = (
             <Nav className="mr-md-5">
-
                 <NavItem>
                     <NavLink exact to='/login' className="NavLink">Login</NavLink>
                 </NavItem>
@@ -24,12 +41,9 @@ const Header = (props) => {
         links = (
             <Nav className="mr-md-5">
                 <NavItem>
-                    <NavLink exact to='/homepage' className="NavLink">Homepage</NavLink>
+                    <NavLink exact to='/' className="NavLink">Homepage</NavLink>
                 </NavItem>
-                <NavItem>
-                    <NavLink exact to='/logout' className="NavLink">Logout</NavLink>
-                </NavItem>
-
+                <button onClick={props.Logout}>Logout</button>
             </Nav>
         )
     }
@@ -46,4 +60,4 @@ const Header = (props) => {
     );
 }
 
-export default Header;
+export default connect(mapStateToProps,mapDispatchToProps)(Header);

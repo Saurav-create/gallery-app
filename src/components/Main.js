@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import Homepage from "./Homepage";
 import Header from "./Header/Header";
 import { Route, Switch, Redirect } from 'react-router-dom';
 import LoginNew from './loginNew';
 import { connect } from "react-redux";
+import { authCheck } from "./redux/actionCreators";
 
 
 
@@ -12,42 +13,54 @@ const mapStateToProps = state => {
         token: state.token,
     }
 }
-
-const Main = (props) => {
-
-    let routes = null;
-    if (props.token === null) {
-        routes = (
-            <Switch>
-
-                <Route path="/login" exact component={LoginNew} />
-
-                <Redirect to="/login" />
-
-            </Switch>
-        )
-
+const mapDispatchToProps = dispatch => {
+    return {
+        authCheck: () => dispatch(authCheck()),
     }
-    else {
-        routes = (<Switch>
+}
 
-            <Route path="/" component={Homepage} />
-            <Redirect to="/" />
+class Main extends Component {
 
-        </Switch>)
+    componentDidMount() {
+        this.props.authCheck();
     }
 
-    console.log(props.token)
-    return (
-        <div>
-            <Header />
 
-            {routes}
+    render() {
+        let routes = null;
+        if (this.props.token === null) {
+            routes = (
+                <Switch>
+
+                    <Route path="/login" exact component={LoginNew} />
+
+                    <Redirect to="/login" />
+
+                </Switch>
+            )
+
+        }
+        else {
+            routes = (<Switch>
+
+                <Route path="/" component={Homepage} />
+                <Redirect to="/" />
+
+            </Switch>)
+        }
 
 
-        </div>
-    );
+        return (
+            <div>
+                <Header />
+
+                {routes}
+
+
+            </div>
+        );
+    }
 }
 
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

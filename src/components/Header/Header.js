@@ -43,7 +43,18 @@ const Header = props => {
                 <NavItem>
                     <NavLink exact to='/' className="NavLink">Homepage</NavLink>
                 </NavItem>
-                <button onClick={props.Logout}>Logout</button>
+                <button 
+                onClick={props.Logout}
+                style={{
+                    width: "20%",
+                    margin:"10px",
+                    padding:"10px",
+                    backgroundColor: "#a2b223",
+                    borderRadius:"5px"
+                }}
+                >
+                    Logout
+                    </button>
             </Nav>
         )
     }
